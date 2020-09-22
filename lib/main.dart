@@ -83,19 +83,8 @@ class Post {
 }
 
 Future<GkpageData> getGkpageData() async {
-  // final response =
-  //     await http.get('https://jsonplaceholder.typicode.com/posts/1');
-  // final responseJson = json.decode(response.body);
-  // print(responseJson);
-  // return new Post.fromJson(responseJson);
-
-  final response = await http
-      .get('http://10.10.0.13:8766/dataserver/common/icon/init?position=1');
-
-  // final response = await dio.get('/dataserver/common/icon/init?position=1');
-  print(response.body);
-  final responseJson = json.decode(response.body);
-  return new GkpageData.fromJson(responseJson);
+  Response response = await dio.get('/dataserver/common/icon/init?position=1');
+  return new GkpageData.fromJson(new Map<String, dynamic>.from(response.data));
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -106,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
         future: getGkpageData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            print(snapshot.data.data['data_10']);
+            print(snapshot.data.code);
             return Scaffold(
               backgroundColor: Colors.white,
               body: Padding(
