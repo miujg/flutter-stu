@@ -64,26 +64,6 @@ class GkpageData {
   }
 }
 
-class Post {
-  final int userId;
-  final int id;
-  final String title;
-  final String body;
-
-  Post({this.userId, this.id, this.title, this.body});
-
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return new Post(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-    );
-  }
-}
-
-//http://10.10.0.14:8766/dataserver/school/8bbbbab74e7dcd1f3a97f68f73825e85/index
-
 Future<GkpageData> getGkpageData() async {
   Response response = await dio.get('/dataserver/common/icon/init?position=1');
   return new GkpageData.fromJson(new Map<String, dynamic>.from(response.data));
@@ -100,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
             List list8 = snapshot.data.data['data_8'];
             List list12 = snapshot.data.data['data_12'];
             List list9 = snapshot.data.data['data_9'];
+            List list11 = snapshot.data.datas[2]['list'];
             return Scaffold(
               backgroundColor: Colors.white,
               body: Container(
@@ -270,7 +251,50 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
+                    // 线条
+                    Container(
+                      height: 5,
+                      color: Color.fromRGBO(204, 204, 204, 1),
+                      margin: EdgeInsets.only(top: 20),
+                    ),
+                    // 筛选高校
+                    Container(
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 15),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: 15),
+                            width: double.infinity,
+                            child: Text(
+                              '筛选高校',
+                              style: TextStyle(
+                                color: Color.fromRGBO(102, 102, 102, 1),
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          Wrap(
+                            spacing: 28,
+                            runSpacing: 10,
+                            alignment: WrapAlignment.center,
+                            children: list11.map<Widget>((e) {
+                              return Image(
+                                height: 68,
+                                width: 145,
+                                image: NetworkImage(e['webpic']),
+                              );
+                            }).toList(),
+                          )
+                        ],
+                      ),
+                    ),
                     // 底部
+                    Container(
+                      height: 5,
+                      color: Color.fromRGBO(204, 204, 204, 1),
+                      margin: EdgeInsets.only(top: 20),
+                    ),
+
                     Container(
                       padding: EdgeInsets.only(left: 10, right: 10),
                       child: Column(children: [
