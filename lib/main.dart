@@ -1,11 +1,9 @@
 // 导入 material ui 库
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 // 导入工具库
 import 'package:flu_app/util/dio.dart';
-import 'package:http/http.dart' as http;
 
 // 应用入口
 void main() {

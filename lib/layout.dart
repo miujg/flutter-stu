@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import './state.dart';
-
 void main() {
   runApp(MyApp());
 }
