@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
             List list8 = snapshot.data.data['data_8'];
             List list12 = snapshot.data.data['data_12'];
             List list9 = snapshot.data.data['data_9'];
-            List list11 = snapshot.data.datas[2]['list'];
+            List<dynamic> list11 = snapshot.data.datas[2]['list'];
             return Scaffold(
               backgroundColor: Colors.white,
               body: Container(
@@ -166,7 +166,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         }).toList(),
                       ),
                     ),
-
                     // 线条
                     Container(
                       height: 5,
@@ -286,80 +285,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
+                    // 线条
                     Container(
                       height: 5,
                       color: Color.fromRGBO(204, 204, 204, 1),
                       margin: EdgeInsets.only(top: 20),
                     ),
-                    // 底部
+                    // 志愿方案
                     Container(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: Column(children: [
-                        Container(
-                          width: 1000,
-                          margin: EdgeInsets.only(top: 14, bottom: 8),
-                          child: Text(
-                            '志愿方案',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromRGBO(102, 102, 102, 1)),
-                          ),
-                        ),
-                        Column(
-                          children: list12.map<Widget>((e) {
-                            return Container(
-                              child: Flex(
-                                direction: Axis.horizontal,
-                                children: [
-                                  Container(
-                                    height: 42,
-                                    width: 42,
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: Image(
-                                      image: NetworkImage(e['apppic']),
-                                      width: 42,
-                                      height: 42,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 1000,
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Text(
-                                            e['title'],
-                                            style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromRGBO(
-                                                    26, 26, 26, 1)),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 1000,
-                                          padding: EdgeInsets.only(left: 10),
-                                          child: Text(
-                                            e['description'],
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    153, 153, 153, 1)),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        )
-                      ]),
+                      child: new Bottom(list12),
                     )
-                    //
                   ],
                 ),
               ),
@@ -368,6 +303,81 @@ class _MyHomePageState extends State<MyHomePage> {
           return CircularProgressIndicator();
         },
       ),
+    );
+  }
+}
+
+// 底部-志愿方案 以组件的方式抽取出来
+class Bottom extends StatelessWidget {
+  // 接受父组件传入的数据
+  Bottom(this.datas);
+  final List<dynamic> datas;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 10, right: 10),
+      child: Column(children: [
+        Container(
+          width: 1000,
+          margin: EdgeInsets.only(top: 14, bottom: 8),
+          child: Text(
+            '志愿方案',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Color.fromRGBO(102, 102, 102, 1)),
+          ),
+        ),
+        Column(
+          children: datas.map<Widget>((e) {
+            return Container(
+              child: Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Container(
+                    height: 42,
+                    width: 42,
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Image(
+                      image: NetworkImage(e['apppic']),
+                      width: 42,
+                      height: 42,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 1000,
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            e['title'],
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromRGBO(26, 26, 26, 1)),
+                          ),
+                        ),
+                        Container(
+                          width: 1000,
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            e['description'],
+                            style: TextStyle(
+                                color: Color.fromRGBO(153, 153, 153, 1)),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          }).toList(),
+        )
+      ]),
     );
   }
 }
