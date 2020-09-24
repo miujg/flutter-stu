@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       // 对命名路由进行校验
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(builder: (context) {
-          print('拦截命名路由');
+          return null;
         });
       },
       // 主页，路由
@@ -68,6 +68,11 @@ Future<GkpageData> getGkpageData() async {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void _handleTapboxChanged(bool newValue) {
+    print('~~~~~~');
+    print(newValue);
+  }
+
   @override
   Widget build(Object context) {
     return new Container(
@@ -293,7 +298,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     // 志愿方案
                     Container(
-                      child: new Bottom(list12),
+                      child: new Bottom(
+                        datas: list12,
+                        onChanged: _handleTapboxChanged,
+                      ),
                     )
                   ],
                 ),
@@ -310,25 +318,35 @@ class _MyHomePageState extends State<MyHomePage> {
 // 底部-志愿方案 以组件的方式抽取出来
 class Bottom extends StatelessWidget {
   // 接受父组件传入的数据
-  Bottom(this.datas);
+  // Bottom(this.datas);
+  Bottom({Key key, this.datas, @required this.onChanged});
   final List<dynamic> datas;
+
+  final ValueChanged<bool> onChanged;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 10, right: 10),
       child: Column(children: [
         Container(
-          width: 1000,
-          margin: EdgeInsets.only(top: 14, bottom: 8),
-          child: Text(
-            '志愿方案',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Color.fromRGBO(102, 102, 102, 1)),
-          ),
-        ),
+            width: 1000,
+            margin: EdgeInsets.only(top: 14, bottom: 8),
+            // 事件监听
+            child: Listener(
+              onPointerDown: (PointerDownEvent event) {
+                onChanged(false);
+                print(event);
+              },
+              child: Text(
+                '志愿方案',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(102, 102, 102, 1)),
+              ),
+            )),
         Column(
           children: datas.map<Widget>((e) {
             return Container(
