@@ -288,19 +288,17 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    // 底部
                     Container(
                       height: 5,
                       color: Color.fromRGBO(204, 204, 204, 1),
                       margin: EdgeInsets.only(top: 20),
                     ),
-
+                    // 底部
                     Container(
                       padding: EdgeInsets.only(left: 10, right: 10),
                       child: Column(children: [
                         Container(
                           width: 1000,
-                          padding: EdgeInsets.only(left: 9),
                           margin: EdgeInsets.only(top: 14, bottom: 8),
                           child: Text(
                             '志愿方案',
