@@ -69,7 +69,6 @@ Future<GkpageData> getGkpageData() async {
 
 class _MyHomePageState extends State<MyHomePage> {
   void _handleTapboxChanged(bool newValue) {
-    print('~~~~~~');
     print(newValue);
   }
 
